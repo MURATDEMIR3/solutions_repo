@@ -33,6 +33,7 @@ Forcing introduces new parameters, such as amplitude and frequency of the extern
 ---
 
 ## Implementation in Python
+(![alt text](image-1.png))
 Below is a Python implementation using numerical methods to solve the forced damped pendulum equation and visualize its behavior.
 
 ```python
