@@ -71,7 +71,4 @@ plt.grid()
 plt.show()
 ```
 
-## Deliverables
-1. A Markdown document with the Python script implementing the simulations.
-2. A detailed explanation of the subjects.
-3. Graphical representations of orbital trajectories, escape velocities, and payload trajectories near Earth.
+
