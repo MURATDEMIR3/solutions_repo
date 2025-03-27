@@ -2,95 +2,86 @@
 # Investigating the Range as a Function of the Angle of Projection
 
 ## Motivation
+
 Projectile motion, while seemingly simple, offers a rich playground for exploring fundamental principles of physics. The problem is straightforward: analyze how the range of a projectile depends on its angle of projection. Yet, beneath this simplicity lies a complex and versatile framework. The equations governing projectile motion involve both linear and quadratic relationships, making them accessible yet deeply insightful.
 
 What makes this topic particularly compelling is the number of free parameters involved in these equations, such as initial velocity, gravitational acceleration, and launch height. These parameters give rise to a diverse set of solutions that can describe a wide array of real-world phenomena, from the arc of a soccer ball to the trajectory of a rocket.
 
-## Theoretical Foundation
-To investigate projectile motion, we begin with the fundamental kinematic equations. Assuming no air resistance, the motion of the projectile can be described using the following equations:
+## Task
 
-- Horizontal displacement:
-  \[ x = v_0 \cos(\theta) t \]
-- Vertical displacement:
-  \[ y = v_0 \sin(\theta) t - \frac{1}{2} g t^2 \]
+### 1. Theoretical Foundation
+- Begin by deriving the governing equations of motion from fundamental principles. This involves solving a basic differential equation to establish the general form of the motion.
+- Highlight how variations in initial conditions lead to a family of solutions.
 
-where:
-- \( v_0 \) is the initial velocity,
-- \( \theta \) is the angle of projection,
-- \( g \) is the acceleration due to gravity,
-- \( t \) is the time elapsed.
+### 2. Analysis of the Range
+- Investigate how the horizontal range depends on the angle of projection.
+- Discuss how changes in other parameters, such as initial velocity and gravitational acceleration, influence the relationship.
 
-To determine the time of flight, we solve for \( t \) when \( y = 0 \):
-\[ t_f = \frac{2 v_0 \sin(\theta)}{g} \]
+### 3. Practical Applications
+- Reflect on how this model can be adapted to describe various real-world situations, such as projectiles launched on uneven terrain or in the presence of air resistance.
 
-The range \( R \) (horizontal distance traveled) is then given by:
-\[ R = \frac{v_0^2 \sin(2\theta)}{g} \]
+### 4. Implementation
+- Develop a computational tool or algorithm to simulate projectile motion.
+- Visualize the range as a function of the angle of projection for different sets of initial conditions.
 
-## Analysis of the Range
+## Theoretical Solutions
 
-From the equation of range, we observe:
-- The range is maximized when \( \theta = 45^\circ \), since \( \sin(2\theta) \) reaches its peak value of 1 at \( 90^\circ \).
-- Increasing \( v_0 \) increases the range quadratically.
-- Increasing \( g \) decreases the range, making it inversely proportional to gravitational acceleration.
-- Adding initial height would modify the time of flight, thus altering the range.
+The equations of motion governing projectile motion are given by:
 
-## Practical Applications
-This model applies to various real-world situations:
-- Sports physics (e.g., soccer, basketball, golf)
-- Ballistics and defense applications
-- Space launch trajectory calculations
-- Engineering problems related to parabolic motion
+\[
+    x(t) = v_0 \cos(\theta) t
+\]
 
-To extend realism, we could incorporate factors such as air resistance, uneven terrain, or varying gravitational fields.
+\[
+    y(t) = v_0 \sin(\theta) t - \frac{1}{2} g t^2
+\]
 
-## Implementation
-A Python script will be used to simulate projectile motion and visualize the range as a function of the angle of projection. We will plot the range for different values of \( v_0 \) and \( g \).
+The total time of flight is:
 
-### Python Code (Sample Outline)
+\[
+    T = \frac{2 v_0 \sin(\theta)}{g}
+\]
+
+The range of the projectile is:
+
+\[
+    R = \frac{v_0^2 \sin(2\theta)}{g}
+\]
+
+The maximum height reached is:
+
+\[
+    H = \frac{v_0^2 \sin^2(\theta)}{2g}
+\]
+
+## Python Code for Simulation
+![alt text](image-2.png)
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
 
-def projectile_range(v0, g):
-    angles = np.linspace(0, 90, 100)
-    ranges = (v0**2 * np.sin(2 * np.radians(angles))) / g
-    return angles, ranges
+def projectile_range(v0, theta, g=9.81):
+    """Compute the range of a projectile given initial velocity and launch angle."""
+    theta_rad = np.radians(theta)
+    return (v0**2 * np.sin(2 * theta_rad)) / g
 
 # Parameters
 v0 = 20  # Initial velocity in m/s
-g = 9.81  # Acceleration due to gravity (Earth)
-
-# Compute range
-angles, ranges = projectile_range(v0, g)
-
-# Plot results
-plt.figure(figsize=(8, 5))
-plt.plot(angles, ranges, label=f'v0={v0} m/s')
-plt.xlabel('Angle of Projection (degrees)')
-plt.ylabel('Range (m)')
-plt.title('Projectile Range vs. Angle of Projection')
-plt.legend()
-plt.grid()
-plt.show()
+theta_values = np.linspace(0, 90, num=100)  # Angle range from 0 to 90 degrees
+ranges = [projectile_range(v0, theta) for theta in theta_values]
 ```
 
-## Discussion
-
-### Limitations of the Idealized Model
-- Ignores air resistance, which reduces range.
-- Assumes flat ground, whereas real-world terrains vary.
-- Assumes constant gravitational acceleration, which may not be valid for high-altitude launches.
-
-### Possible Extensions
-- Implementing drag force using differential equations.
-- Modeling projectiles launched from different heights.
-- Considering wind effects and varying gravitational fields.
-
 ## Deliverables
-- A Markdown document containing the theoretical derivations and Python code.
-- Graphical representations showing the dependence of range on projection angle.
-- A discussion on the limitations and possible extensions of the model.
 
+1. A Markdown document with Python script or notebook implementing the simulations.
+2. A detailed description of the family of solutions derived from the governing equations.
+3. Graphical representations of the range versus angle of projection, highlighting how different parameters influence the curve.
+4. A discussion on the limitations of the idealized model and suggestions for incorporating more realistic factors, such as drag or wind.
 
+## Hints and Resources
 
+- Start from the fundamental laws of motion and gradually build the general solution.
+- Use numerical methods or simulation tools to explore scenarios that go beyond simple analytical solutions.
+- Consider how this model connects to real-world systems, such as sports, engineering, and astrophysics.
+
+This task encourages a deep understanding of projectile motion while showcasing its versatility and applicability across various domains.
