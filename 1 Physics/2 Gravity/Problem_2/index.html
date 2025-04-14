@@ -172,6 +172,165 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-2">Problem 2</h1>
+<h1 id="escape-velocities-and-cosmic-velocities">🛰️ Escape Velocities and Cosmic Velocities</h1>
+<h2 id="motivation">Motivation</h2>
+<p>The concept of escape velocity is crucial for understanding the conditions required to leave a celestial body's gravitational influence. Extending this concept, the first, second, and third cosmic velocities define the thresholds for orbiting, escaping, and leaving a star system. These principles underpin modern space exploration, from launching satellites to interplanetary missions.</p>
+<hr/>
+<h2 id="tasks">Tasks</h2>
+<ol>
+<li>Define the first, second, and third cosmic velocities, explaining their physical meaning.</li>
+<li>Analyze the mathematical derivations and parameters affecting these velocities.</li>
+<li>Calculate and visualize these velocities for different celestial bodies like Earth, Mars, and Jupiter.</li>
+<li>Discuss their importance in space exploration, including launching satellites, missions to other planets, and potential interstellar travel.</li>
+</ol>
+<hr/>
+<h2 id="deliverables">Deliverables</h2>
+<ul>
+<li>A Markdown document with Python script or notebook implementing the simulations.</li>
+<li>A detailed explanation of the subjects.</li>
+<li>Graphical representations of escape velocities and cosmic velocities for various celestial bodies.</li>
+</ul>
+<hr/>
+<h1 id="theoretical-background">Theoretical Background</h1>
+<h2 id="what-is-escape-velocity">What is Escape Velocity?</h2>
+<p>Escape velocity is the minimum speed needed for an object to break free from the gravitational pull of a celestial body without further propulsion.</p>
+<p><strong>Formula:</strong></p>
+<div class="arithmatex">\[
+v_e = \sqrt{\frac{2GM}{r}}
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(G\)</span> is the gravitational constant <span class="arithmatex">\(6.674 \times 10^{-11}\, \text{Nm}^2/\text{kg}^2\)</span></li>
+<li><span class="arithmatex">\(M\)</span> is the mass of the celestial body</li>
+<li><span class="arithmatex">\(r\)</span> is the radius from the center of mass</li>
+</ul>
+<hr/>
+<h2 id="the-cosmic-velocities">The Cosmic Velocities</h2>
+<h3 id="1-first-cosmic-velocity-orbital-speed">1. First Cosmic Velocity — Orbital Speed</h3>
+<div class="arithmatex">\[
+v_1 = \sqrt{\frac{GM}{r}}
+\]</div>
+<h3 id="2-second-cosmic-velocity-escape-speed">2. Second Cosmic Velocity — Escape Speed</h3>
+<div class="arithmatex">\[
+v_2 = \sqrt{2} \cdot v_1
+\]</div>
+<h3 id="3-third-cosmic-velocity-interstellar-escape">3. Third Cosmic Velocity — Interstellar Escape</h3>
+<div class="arithmatex">\[
+v_3 = \sqrt{v_{\text{earth orbit}}^2 + v_{\text{sun escape}}^2}
+\]</div>
+<hr/>
+<h1 id="python-simulation-of-cosmic-velocities">Python Simulation of Cosmic Velocities</h1>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+G = 6.67430e-11  # Gravitational constant
+
+# Celestial body data: (mass in kg, radius in meters)
+bodies = {
+    "Earth": (5.972e24, 6.371e6),
+    "Mars": (6.39e23, 3.3895e6),
+    "Jupiter": (1.898e27, 6.9911e7)
+}
+
+def velocities(mass, radius):
+    v1 = np.sqrt(G * mass / radius)
+    v2 = np.sqrt(2) * v1
+    return v1, v2
+
+for name, (mass, radius) in bodies.items():
+    v1, v2 = velocities(mass, radius)
+    print(f"{name}: First Cosmic Velocity = {v1/1000:.2f} km/s, Second Cosmic Velocity = {v2/1000:.2f} km/s")
+</code></pre>
+<hr/>
+<h2 id="visualization">Visualization</h2>
+<pre><code class="language-python">labels = []
+v1_list = []
+v2_list = []
+
+for name, (mass, radius) in bodies.items():
+    v1, v2 = velocities(mass, radius)
+    labels.append(name)
+    v1_list.append(v1 / 1000)
+    v2_list.append(v2 / 1000)
+
+x = np.arange(len(labels))
+width = 0.35
+
+fig, ax = plt.subplots()
+ax.bar(x - width/2, v1_list, width, label='First Cosmic Velocity')
+ax.bar(x + width/2, v2_list, width, label='Second Cosmic Velocity')
+
+ax.set_ylabel('Velocity (km/s)')
+ax.set_title('Cosmic Velocities for Celestial Bodies')
+ax.set_xticks(x)
+ax.set_xticklabels(labels)
+ax.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+</code></pre>
+<hr/>
+<h1 id="trajectories-of-a-freely-released-payload-near-earth">Trajectories of a Freely Released Payload Near Earth</h1>
+<h2 id="motivation_1">Motivation</h2>
+<p>When an object is released from a moving rocket near Earth, its trajectory depends on initial conditions and gravitational forces. This scenario blends principles of orbital mechanics and numerical methods.</p>
+<hr/>
+<h2 id="tasks_1">Tasks</h2>
+<ol>
+<li>Analyze the possible trajectories (parabolic, hyperbolic, elliptical) of a payload released near Earth.</li>
+<li>Perform a numerical analysis to compute the path based on initial conditions (position, velocity, and altitude).</li>
+<li>Discuss how these trajectories relate to orbital insertion, reentry, or escape scenarios.</li>
+<li>Develop a computational tool to simulate and visualize the motion of the payload under Earth's gravity.</li>
+</ol>
+<hr/>
+<h2 id="python-simulation-of-trajectory">Python Simulation of Trajectory</h2>
+<p><img alt="alt text" src="../image-1.png"/></p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+import numpy as np
+
+G = 6.67430e-11
+M = 5.972e24
+R = 6.371e6  # Earth radius
+
+def trajectory(t, y):
+    x, vx, y_, vy = y
+    r = np.sqrt(x**2 + y_**2)
+    ax = -G * M * x / r**3
+    ay = -G * M * y_ / r**3
+    return [vx, ax, vy, ay]
+
+initial_state = [R + 1000, 0, 0, 7800]  # 1 km above Earth, 7.8 km/s speed
+t_span = (0, 6000)
+t_eval = np.linspace(*t_span, 1000)
+
+solution = solve_ivp(trajectory, t_span, initial_state, t_eval=t_eval)
+
+plt.plot(solution.y[0], solution.y[2])
+plt.xlabel("x position (m)")
+plt.ylabel("y position (m)")
+plt.title("Payload Trajectory Near Earth")
+plt.axis('equal')
+plt.grid(True)
+plt.show()
+</code></pre>
+<hr/>
+<h1 id="hints-and-resources">Hints and Resources</h1>
+<ul>
+<li>Use fundamental gravitational principles: Newton’s Law of Gravitation and Kepler’s Laws.</li>
+<li>Leverage numerical tools (Python) to simulate orbits and trajectories.</li>
+<li>Apply to space mission planning, satellite deployment, and planetary exploration.</li>
+</ul>
+<hr/>
+<h2 id="deliverables-summary">Deliverables Summary</h2>
+<ul>
+<li>Clean Markdown document ready for Visual Studio &amp; GitHub.</li>
+<li>All physical explanations and mathematical derivations.</li>
+<li>Full Python code for simulation and visualization.</li>
+<li>Graphs for escape velocities and orbital trajectories.</li>
+</ul>
+<hr/>
+<h1 id="conclusion">Conclusion</h1>
+<p>This project provides a strong foundation for understanding how gravity governs motion and escape conditions in space. From satellite launches to deep space missions, the principles explored here are critical in real-world aerospace engineering.</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
