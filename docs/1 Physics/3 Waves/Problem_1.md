@@ -5,19 +5,24 @@
 Interference occurs when waves from different sources overlap, creating new patterns. On a water surface, this can be observed when ripples from different points meet, forming distinctive interference patterns. These patterns help us understand wave behavior and the relationship between wave phase and multiple sources.
 
 ## Task
-A circular wave on the water surface, emanating from a point source located at $(x_0, y_0)$, can be described by the equation:
+A circular wave on the water surface, emanating from a point source located at (x_0, y_0), can be described by the equation:
 
-$$
+
 \eta(x, y, t) = \frac{A}{\sqrt{r}} \cdot \cos(kr - \omega t + \phi)
-$$
+
 
 where:
-- $ \eta(x, y, t) $ is the displacement at $ (x, y) $ and time $ t $.
-- $ A $ is the amplitude.
-- $ k = \frac{2\pi}{\lambda} $ is the wave number.
-- $ \omega = 2\pi f $ is the angular frequency.
-- $ r = \sqrt{(x - x_0)^2 + (y - y_0)^2} $ is the distance from the source.
-- $ \phi $ is the initial phase.
+-  \eta(x, y, t) is the displacement at  (x, y) and time.
+-  
+-  A  is the amplitude.
+-  
+-  k = \frac{2\pi}{\lambda} $ is the wave number.
+-  
+-  \omega = 2\pi f  is the angular frequency.
+-  
+-  r = \sqrt{(x - x_0)^2 + (y - y_0)^2} is the distance from the source.
+-  
+-  \phi is the initial phase.
 
 ## Problem Statement
 Analyze the interference patterns formed on the water surface due to the superposition of waves emitted from sources placed at the vertices of a regular polygon.
@@ -36,7 +41,7 @@ Analyze the interference patterns formed on the water surface due to the superpo
 6. **Visualization**: Use Python and Matplotlib to graphically illustrate the patterns.
 
 ## Considerations
-- Assume all sources emit waves with the same $ A, \lambda, $ and $ f $.
+- Assume all sources emit waves with the same  A, \lambda,  and  f .
 - The waves are coherent with a constant phase difference.
 - Use Python for simulations and visualizations.
 
