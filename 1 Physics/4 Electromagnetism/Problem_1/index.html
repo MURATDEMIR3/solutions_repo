@@ -172,6 +172,113 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="simulating-the-effects-of-the-lorentz-force">Simulating the Effects of the Lorentz Force</h1>
+<h2 id="motivation">Motivation</h2>
+<p>The Lorentz force, expressed as:</p>
+<div class="arithmatex">\[
+\vec{F} = q\vec{E} + q\vec{v} \times \vec{B}
+\]</div>
+<p>governs the motion of charged particles in electric and magnetic fields. It is foundational in fields like plasma physics, particle accelerators, and astrophysics. Through simulations, we can explore the practical applications and visualize the complex trajectories that arise due to this force.</p>
+<hr/>
+<h2 id="task-breakdown">Task Breakdown</h2>
+<h3 id="1-exploration-of-applications">1. Exploration of Applications</h3>
+<ul>
+<li><strong>Real-world Systems</strong>: The Lorentz force plays a crucial role in:</li>
+<li>Particle accelerators</li>
+<li>Mass spectrometers</li>
+<li>
+<p>Plasma confinement systems</p>
+</li>
+<li>
+<p><strong>Field Relevance</strong>:</p>
+</li>
+<li>Electric fields (<span class="arithmatex">\(\vec{E}\)</span>) accelerate particles.</li>
+<li>Magnetic fields (<span class="arithmatex">\(\vec{B}\)</span>) steer particle trajectories.</li>
+<li>Combined fields create intricate motion patterns.</li>
+</ul>
+<hr/>
+<h3 id="2-simulating-particle-motion">2. Simulating Particle Motion</h3>
+<p>We'll simulate the trajectory of a charged particle using the Runge-Kutta method (4th order). Scenarios:</p>
+<ul>
+<li>Uniform magnetic field</li>
+<li>Combined electric and magnetic fields</li>
+<li>Crossed electric and magnetic fields</li>
+</ul>
+<p>We'll observe:
+- <strong>Circular motion</strong>
+- <strong>Helical trajectories</strong>
+- <strong>Drift behavior</strong></p>
+<hr/>
+<h3 id="3-parameter-exploration">3. Parameter Exploration</h3>
+<p>We will vary:</p>
+<ul>
+<li>Field Strengths: <span class="arithmatex">\(\vec{E}, \vec{B}\)</span></li>
+<li>Particle's initial velocity <span class="arithmatex">\(\vec{v}\)</span></li>
+<li>Charge <span class="arithmatex">\(q\)</span> and mass <span class="arithmatex">\(m\)</span></li>
+</ul>
+<p>Goal: Understand how each parameter impacts the trajectory.</p>
+<hr/>
+<h2 id="visualization">Visualization</h2>
+<ul>
+<li>2D and 3D plots of particle motion</li>
+<li>Highlight physical effects:</li>
+<li><strong>Larmor radius</strong></li>
+<li><strong>Drift velocity</strong></li>
+<li><strong>Cyclotron motion</strong></li>
+</ul>
+<hr/>
+<h2 id="python-simulation">Python Simulation</h2>
+<p>We use <code>NumPy</code> for computation and <code>Matplotlib</code> for visualization.</p>
+<p>```python
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D</p>
+<h1 id="constants">Constants</h1>
+<p>q = 1.6e-19  # Charge (Coulombs)
+m = 9.1e-31  # Mass (kg)</p>
+<h1 id="field-definitions-uniform">Field Definitions (Uniform)</h1>
+<p>E = np.array([0.0, 0.0, 0.0])      # Electric field (V/m)
+B = np.array([0.0, 0.0, 1.0])      # Magnetic field (T)</p>
+<h1 id="time-settings">Time settings</h1>
+<p>dt = 1e-11  # Time step
+steps = 1000</p>
+<h1 id="initial-conditions">Initial conditions</h1>
+<p>r = np.zeros((steps, 3))   # Position array
+v = np.zeros((steps, 3))   # Velocity array</p>
+<h1 id="initial-position-and-velocity">Initial position and velocity</h1>
+<p>r[0] = np.array([0.0, 0.0, 0.0])
+v[0] = np.array([1e6, 0.0, 0.0])</p>
+<h1 id="lorentz-force-using-runge-kutta-4">Lorentz force using Runge-Kutta 4</h1>
+<p>def lorentz_force(v, E, B):
+    return (q/m) * (E + np.cross(v, B))</p>
+<p>def runge_kutta_step(r, v, dt):
+    k1v = lorentz_force(v, E, B)
+    k1r = v</p>
+<pre><code>k2v = lorentz_force(v + 0.5*dt*k1v, E, B)
+k2r = v + 0.5*dt*k1v
+
+k3v = lorentz_force(v + 0.5*dt*k2v, E, B)
+k3r = v + 0.5*dt*k2v
+
+k4v = lorentz_force(v + dt*k3v, E, B)
+k4r = v + dt*k3v
+
+v_new = v + (dt/6)*(k1v + 2*k2v + 2*k3v + k4v)
+r_new = r + (dt/6)*(k1r + 2*k2r + 2*k3r + k4r)
+return r_new, v_new
+</code></pre>
+<h1 id="simulation-loop">Simulation loop</h1>
+<p>for i in range(steps - 1):
+    r[i+1], v[i+1] = runge_kutta_step(r[i], v[i], dt)</p>
+<h1 id="plotting-the-trajectory">Plotting the trajectory</h1>
+<p>fig = plt.figure(figsize=(10,6))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot(r[:,0], r[:,1], r[:,2])
+ax.set_title('Particle Trajectory under Uniform Magnetic Field')
+ax.set_xlabel('X Position (m)')
+ax.set_ylabel('Y Position (m)')
+ax.set_zlabel('Z Position (m)')
+plt.show()</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
