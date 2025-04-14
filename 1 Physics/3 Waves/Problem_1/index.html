@@ -172,6 +172,113 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="interference-patterns-on-a-water-surface">Interference Patterns on a Water Surface</h1>
+<h2 id="motivation">Motivation</h2>
+<p>Interference occurs when waves from different sources overlap, creating new patterns. On a water surface, this can be easily observed when ripples from different points meet, forming unique interference patterns. These patterns can show us how waves combine in different ways, either reinforcing each other or canceling out.</p>
+<p>Studying these patterns helps us understand wave behavior in a simple, visual way. It also allows us to explore important concepts, like the relationship between wave phase and the effects of multiple sources. This task offers a hands-on approach to learning about wave interactions and their real-world applications, making it an interesting and engaging way to dive into wave physics.</p>
+<hr/>
+<h2 id="task">Task</h2>
+<p>A circular wave on the water surface, emanating from a point source located at <span class="arithmatex">\((x_0, y_0)\)</span>, is described by the Single Disturbance Equation:</p>
+<div class="arithmatex">\[
+\eta(x, y, t) = \frac{A}{\sqrt{r}} \cdot \cos(kr - \omega t + \phi)
+\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(\eta(x, y, t)\)</span> is the displacement of the water surface at point <span class="arithmatex">\((x, y)\)</span> and time <span class="arithmatex">\(t\)</span>.</li>
+<li><span class="arithmatex">\(A\)</span> is the amplitude of the wave.</li>
+<li><span class="arithmatex">\(k = \frac{2\pi}{\lambda}\)</span> is the wave number, related to the wavelength <span class="arithmatex">\(\lambda\)</span>.</li>
+<li><span class="arithmatex">\(\omega = 2\pi f\)</span> is the angular frequency, related to the frequency <span class="arithmatex">\(f\)</span>.</li>
+<li><span class="arithmatex">\(r = \sqrt{(x - x_0)^2 + (y - y_0)^2}\)</span> is the distance from the source to the point <span class="arithmatex">\((x, y)\)</span>.</li>
+<li><span class="arithmatex">\(\phi\)</span> is the initial phase.</li>
+</ul>
+<hr/>
+<h2 id="problem-statement">Problem Statement</h2>
+<p>Your task is to analyze the interference patterns formed on the water surface due to the superposition of waves emitted from point sources placed at the vertices of a chosen regular polygon.</p>
+<hr/>
+<h2 id="steps-to-follow">Steps to Follow</h2>
+<ol>
+<li>
+<p><strong>Select a Regular Polygon</strong><br/>
+   Choose a regular polygon (e.g., equilateral triangle, square, regular pentagon).</p>
+</li>
+<li>
+<p><strong>Position the Sources</strong><br/>
+   Place point wave sources at the vertices of the selected polygon.</p>
+</li>
+<li>
+<p><strong>Wave Equations</strong><br/>
+   Write the equations describing the waves emitted from each source, considering their respective positions.</p>
+</li>
+<li>
+<p><strong>Superposition of Waves</strong><br/>
+   Apply the principle of superposition by summing the wave displacements at each point on the water surface:</p>
+</li>
+</ol>
+<p>$$
+   \eta_{\text{sum}}(x, y, t) = \sum_{i=1}^{N} \eta_i(x, y, t)
+   $$</p>
+<p>Where <span class="arithmatex">\(N\)</span> is the number of sources (vertices of the polygon).</p>
+<ol>
+<li><strong>Analyze Interference Patterns</strong><br/>
+   Examine the resulting displacement <span class="arithmatex">\(\eta_{\text{sum}}(x, y, t)\)</span> as a function of position <span class="arithmatex">\((x, y)\)</span> and time <span class="arithmatex">\(t\)</span>. Identify regions of:</li>
+<li>Constructive interference (wave amplification)</li>
+<li>
+<p>Destructive interference (wave cancellation)</p>
+</li>
+<li>
+<p><strong>Visualization</strong><br/>
+   Present your findings graphically, illustrating the interference patterns for the chosen regular polygon.</p>
+</li>
+</ol>
+<hr/>
+<h2 id="considerations">Considerations</h2>
+<ul>
+<li>Assume all sources emit waves with the same amplitude <span class="arithmatex">\(A\)</span>, wavelength <span class="arithmatex">\(\lambda\)</span>, and frequency <span class="arithmatex">\(f\)</span>.</li>
+<li>The waves are coherent, maintaining a constant phase difference.</li>
+<li>You may use simulation and visualization tools such as <strong>Python</strong> (with libraries like <code>matplotlib</code>, <code>numpy</code>), or other graphical software to aid in your analysis.</li>
+</ul>
+<hr/>
+<h2 id="python-implementation">Python Implementation</h2>
+<p><img alt="alt text" src="../image.png"/>
+```python</p>
+<h1 id="interference-patterns-on-a-water-surface-regular-polygon-configuration">Interference Patterns on a Water Surface (Regular Polygon Configuration)</h1>
+<p>import numpy as np
+import matplotlib.pyplot as plt</p>
+<h1 id="wave-parameters">Wave Parameters</h1>
+<p>A = 1         # Amplitude
+λ = 1         # Wavelength
+k = 2 * np.pi / λ
+f = 1         # Frequency
+ω = 2 * np.pi * f
+φ = 0         # Initial Phase
+t = 0         # Time snapshot</p>
+<h1 id="simulation-grid">Simulation Grid</h1>
+<p>x = np.linspace(-5, 5, 500)
+y = np.linspace(-5, 5, 500)
+X, Y = np.meshgrid(x, y)</p>
+<h1 id="regular-polygon-parameters-eg-square">Regular Polygon Parameters (e.g., square)</h1>
+<p>N = 4  # Number of vertices
+radius = 2
+center = (0, 0)</p>
+<h1 id="calculate-polygon-vertices">Calculate Polygon Vertices</h1>
+<p>angles = np.linspace(0, 2 * np.pi, N, endpoint=False)
+sources = [(center[0] + radius * np.cos(a), center[1] + radius * np.sin(a)) for a in angles]</p>
+<h1 id="calculate-total-wave-displacement">Calculate Total Wave Displacement</h1>
+<p>η_sum = np.zeros_like(X)</p>
+<p>for (x0, y0) in sources:
+    r = np.sqrt((X - x0)<strong>2 + (Y - y0)</strong>2)
+    η = A / np.sqrt(r + 1e-6) * np.cos(k * r - ω * t + φ)
+    η_sum += η</p>
+<h1 id="plotting-the-interference-pattern">Plotting the Interference Pattern</h1>
+<p>plt.figure(figsize=(8, 6))
+plt.pcolormesh(X, Y, η_sum, shading='auto', cmap='seismic')
+plt.colorbar(label='Displacement')
+plt.title('Interference Pattern on a Water Surface (Square Configuration)')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.axis('equal')
+plt.tight_layout()
+plt.show()</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
