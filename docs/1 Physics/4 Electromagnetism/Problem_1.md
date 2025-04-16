@@ -109,9 +109,3 @@ plt.show()
 - Incorporate collisions or damping forces for more realistic modeling in plasma environments.
 
 ---
-
-## Deliverables
-1. A Markdown document with Python script or notebook implementing the simulations.
-2. Visualizations of particle trajectories for the specified field configurations.
-3. A discussion on how the results relate to practical systems, such as cyclotrons or magnetic traps.
-4. Suggestions for extending the simulation to more complex scenarios, such as non-uniform fields.
