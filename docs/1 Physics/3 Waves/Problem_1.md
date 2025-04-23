@@ -1,6 +1,5 @@
 # Problem 1# Interference Patterns on a Water Surface
 
-<<<<<<< HEAD
 ##  Motivation
 
 Interference occurs when waves from different sources overlap, creating new patterns. On a water surface, this can be clearly observed when ripples from different points meet, forming distinctive interference patterns. These patterns can show how waves combine in different ways — sometimes reinforcing each other, other times canceling each other out.
@@ -119,5 +118,3 @@ This simulation demonstrates the importance of source geometry and phase relatio
 3.  Graphical output clearly showing interference zones (constructive and destructive regions).
 
 
-=======
->>>>>>> fc56fae598979e8ee515901a147b0ef0920b1c83
