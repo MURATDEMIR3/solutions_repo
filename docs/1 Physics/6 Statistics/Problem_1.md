@@ -63,7 +63,8 @@ This powerful result allows us to make inferences about populations using the no
 ---
 
 ##  Python Code
-
+![alt text](image.png)
+![alt text](image-1.png)
 ```python
 # clt_simulation.py
 # Central Limit Theorem Simulation
