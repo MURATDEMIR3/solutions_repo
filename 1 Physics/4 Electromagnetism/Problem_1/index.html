@@ -227,34 +227,38 @@
 <hr/>
 <h2 id="python-code-implementation">Python Code Implementation</h2>
 <p><img alt="alt text" src="../image.png"/></p>
-<p>```python
-import numpy as np
+<pre><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D</p>
-<h1 id="constants-normalized-units">Constants (normalized units)</h1>
-<p>q = 1.0               # Charge (arbitrary units)
-m = 1.0               # Mass (arbitrary units)</p>
-<h1 id="time-parameters">Time parameters</h1>
-<p>dt = 0.01             # Time step (seconds)
-steps = 1000          # Number of simulation steps</p>
-<h1 id="lorentz-force-calculation">Lorentz force calculation</h1>
-<p>def lorentz_force(q, E, v, B):
-    return q * (E + np.cross(v, B))</p>
-<h1 id="euler-method-simulation-of-particle-motion">Euler method simulation of particle motion</h1>
-<p>def simulate_motion(q, m, E, B, v0, dt, steps):
+from mpl_toolkits.mplot3d import Axes3D
+
+# Constants (normalized units)
+q = 1.0               # Charge (arbitrary units)
+m = 1.0               # Mass (arbitrary units)
+
+# Time parameters
+dt = 0.01             # Time step (seconds)
+steps = 1000          # Number of simulation steps
+
+# Lorentz force calculation
+def lorentz_force(q, E, v, B):
+    return q * (E + np.cross(v, B))
+
+# Euler method simulation of particle motion
+def simulate_motion(q, m, E, B, v0, dt, steps):
     positions = np.zeros((steps, 3))
     velocities = np.zeros((steps, 3))
-    velocities[0] = v0</p>
-<pre><code>for i in range(1, steps):
-    F = lorentz_force(q, E, velocities[i-1], B)
-    a = F / m
-    velocities[i] = velocities[i-1] + a * dt
-    positions[i] = positions[i-1] + velocities[i] * dt
+    velocities[0] = v0
 
-return positions, velocities
-</code></pre>
-<h1 id="plotting-trajectories">Plotting trajectories</h1>
-<p>def plot_trajectory(positions, title, is_3d=False):
+    for i in range(1, steps):
+        F = lorentz_force(q, E, velocities[i-1], B)
+        a = F / m
+        velocities[i] = velocities[i-1] + a * dt
+        positions[i] = positions[i-1] + velocities[i] * dt
+
+    return positions, velocities
+
+# Plotting trajectories
+def plot_trajectory(positions, title, is_3d=False):
     if is_3d:
         fig = plt.figure(figsize=(8,6))
         ax = fig.add_subplot(111, projection='3d')
@@ -270,30 +274,37 @@ return positions, velocities
         plt.ylabel('Y Position')
         plt.title(title)
         plt.grid(True)
-    plt.show()</p>
-<h1 id="initial-velocity-for-simulations">Initial velocity for simulations</h1>
-<p>initial_velocity = np.array([1.0, 0.0, 0.0])</p>
-<h1 id="1-uniform-magnetic-field-only-circular-motion">1) Uniform magnetic field only (circular motion)</h1>
-<p>E_field = np.array([0.0, 0.0, 0.0])
-B_field = np.array([0.0, 0.0, 1.0])
-pos, vel = simulate_motion(q, m, E_field, B_field, initial_velocity, dt, steps)
-plot_trajectory(pos, "Uniform Magnetic Field - 2D Trajectory")</p>
-<h1 id="2-combined-uniform-electric-and-magnetic-fields">2) Combined uniform electric and magnetic fields</h1>
-<p>E_field = np.array([0.0, 1.0, 0.0])
-B_field = np.array([0.0, 0.0, 1.0])
-pos, vel = simulate_motion(q, m, E_field, B_field, initial_velocity, dt, steps)
-plot_trajectory(pos, "Combined Electric and Magnetic Fields - 2D Trajectory")</p>
-<h1 id="3-crossed-electric-and-magnetic-fields">3) Crossed electric and magnetic fields</h1>
-<p>E_field = np.array([1.0, 0.0, 0.0])
-B_field = np.array([0.0, 0.0, 1.0])
-pos, vel = simulate_motion(q, m, E_field, B_field, initial_velocity, dt, steps)
-plot_trajectory(pos, "Crossed Electric and Magnetic Fields - 2D Trajectory")</p>
-<h1 id="4-helical-motion-in-uniform-magnetic-field-3d">4) Helical motion in uniform magnetic field (3D)</h1>
-<p>initial_velocity = np.array([1.0, 1.0, 0.0])
+    plt.show()
+
+# Initial velocity for simulations
+initial_velocity = np.array([1.0, 0.0, 0.0])
+
+# 1) Uniform magnetic field only (circular motion)
 E_field = np.array([0.0, 0.0, 0.0])
 B_field = np.array([0.0, 0.0, 1.0])
 pos, vel = simulate_motion(q, m, E_field, B_field, initial_velocity, dt, steps)
-plot_trajectory(pos, "Helical Motion in Uniform Magnetic Field - 3D Trajectory", is_3d=True)</p>
+plot_trajectory(pos, "Uniform Magnetic Field - 2D Trajectory")
+
+# 2) Combined uniform electric and magnetic fields
+E_field = np.array([0.0, 1.0, 0.0])
+B_field = np.array([0.0, 0.0, 1.0])
+pos, vel = simulate_motion(q, m, E_field, B_field, initial_velocity, dt, steps)
+plot_trajectory(pos, "Combined Electric and Magnetic Fields - 2D Trajectory")
+
+# 3) Crossed electric and magnetic fields
+E_field = np.array([1.0, 0.0, 0.0])
+B_field = np.array([0.0, 0.0, 1.0])
+pos, vel = simulate_motion(q, m, E_field, B_field, initial_velocity, dt, steps)
+plot_trajectory(pos, "Crossed Electric and Magnetic Fields - 2D Trajectory")
+
+# 4) Helical motion in uniform magnetic field (3D)
+initial_velocity = np.array([1.0, 1.0, 0.0])
+E_field = np.array([0.0, 0.0, 0.0])
+B_field = np.array([0.0, 0.0, 1.0])
+pos, vel = simulate_motion(q, m, E_field, B_field, initial_velocity, dt, steps)
+plot_trajectory(pos, "Helical Motion in Uniform Magnetic Field - 3D Trajectory", is_3d=True)
+
+</code></pre>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
