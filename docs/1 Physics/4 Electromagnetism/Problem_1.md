@@ -146,3 +146,5 @@ E_field = np.array([0.0, 0.0, 0.0])
 B_field = np.array([0.0, 0.0, 1.0])
 pos, vel = simulate_motion(q, m, E_field, B_field, initial_velocity, dt, steps)
 plot_trajectory(pos, "Helical Motion in Uniform Magnetic Field - 3D Trajectory", is_3d=True)
+
+```
