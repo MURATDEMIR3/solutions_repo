@@ -172,6 +172,128 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="simulating-the-effects-of-the-lorentz-force">Simulating the Effects of the Lorentz Force</h1>
+<hr/>
+<h2 id="motivation">Motivation</h2>
+<p>The Lorentz force is fundamental in understanding how charged particles move under electric and magnetic fields. It plays a crucial role in many areas of physics including plasma physics, particle accelerators, and astrophysics. By simulating the Lorentz force, we gain insights into particle trajectories and can visualize phenomena such as circular motion, drift velocity, and helical paths, which are essential in practical devices like cyclotrons and mass spectrometers.</p>
+<p>The Lorentz force is mathematically expressed as</p>
+<div class="arithmatex">\[
+\mathbf{F} = q \mathbf{E} + q \mathbf{v} \times \mathbf{B},
+\]</div>
+<p>where <span class="arithmatex">\(q\)</span> is the particle charge, <span class="arithmatex">\(\mathbf{E}\)</span> is the electric field vector, <span class="arithmatex">\(\mathbf{v}\)</span> is the particle velocity vector, and <span class="arithmatex">\(\mathbf{B}\)</span> is the magnetic field vector.</p>
+<hr/>
+<h2 id="task">Task</h2>
+<h3 id="1-exploration-of-applications">1. Exploration of Applications</h3>
+<ul>
+<li>Identify systems where the Lorentz force is crucial (e.g., particle accelerators, mass spectrometers, plasma confinement).</li>
+<li>Discuss how electric <span class="arithmatex">\(\mathbf{E}\)</span> and magnetic <span class="arithmatex">\(\mathbf{B}\)</span> fields influence charged particle trajectories.</li>
+</ul>
+<h3 id="2-simulating-particle-motion">2. Simulating Particle Motion</h3>
+<ul>
+<li>Implement simulations to compute and visualize trajectories of a charged particle under:</li>
+<li>Uniform magnetic field.</li>
+<li>Combined uniform electric and magnetic fields.</li>
+<li>Crossed electric and magnetic fields.</li>
+<li>Simulate circular, helical, or drift motions based on initial velocities and fields.</li>
+</ul>
+<h3 id="3-parameter-exploration">3. Parameter Exploration</h3>
+<ul>
+<li>Allow variations in:</li>
+<li>Field strengths <span class="arithmatex">\(\mathbf{E}\)</span> and <span class="arithmatex">\(\mathbf{B}\)</span>.</li>
+<li>Initial velocity <span class="arithmatex">\(\mathbf{v}\)</span>.</li>
+<li>Charge <span class="arithmatex">\(q\)</span> and mass <span class="arithmatex">\(m\)</span>.</li>
+<li>Analyze the effects of these parameters on the particle’s trajectory.</li>
+</ul>
+<h3 id="4-visualization">4. Visualization</h3>
+<ul>
+<li>Generate clear 2D and 3D plots with proper labels.</li>
+<li>Highlight key physical features such as Larmor radius and drift velocity.</li>
+</ul>
+<hr/>
+<h2 id="deliverables">Deliverables</h2>
+<ol>
+<li>Markdown document containing the explanation and Python simulation code.</li>
+<li>Visualizations of particle trajectories for different field configurations.</li>
+<li>Discussion relating simulation results to practical applications.</li>
+<li>Suggestions for extending the simulation to more complex scenarios (e.g., non-uniform fields).</li>
+</ol>
+<hr/>
+<h2 id="hints-and-resources">Hints and Resources</h2>
+<ul>
+<li>Use numerical methods such as Euler integration to solve the equations of motion.</li>
+<li>Utilize Python libraries like NumPy and Matplotlib for computation and visualization.</li>
+<li>Begin with simple cases and gradually introduce complexity.</li>
+</ul>
+<hr/>
+<h2 id="python-code-implementation">Python Code Implementation</h2>
+<p><img alt="alt text" src="../image.png"/></p>
+<p>```python
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D</p>
+<h1 id="constants-normalized-units">Constants (normalized units)</h1>
+<p>q = 1.0               # Charge (arbitrary units)
+m = 1.0               # Mass (arbitrary units)</p>
+<h1 id="time-parameters">Time parameters</h1>
+<p>dt = 0.01             # Time step (seconds)
+steps = 1000          # Number of simulation steps</p>
+<h1 id="lorentz-force-calculation">Lorentz force calculation</h1>
+<p>def lorentz_force(q, E, v, B):
+    return q * (E + np.cross(v, B))</p>
+<h1 id="euler-method-simulation-of-particle-motion">Euler method simulation of particle motion</h1>
+<p>def simulate_motion(q, m, E, B, v0, dt, steps):
+    positions = np.zeros((steps, 3))
+    velocities = np.zeros((steps, 3))
+    velocities[0] = v0</p>
+<pre><code>for i in range(1, steps):
+    F = lorentz_force(q, E, velocities[i-1], B)
+    a = F / m
+    velocities[i] = velocities[i-1] + a * dt
+    positions[i] = positions[i-1] + velocities[i] * dt
+
+return positions, velocities
+</code></pre>
+<h1 id="plotting-trajectories">Plotting trajectories</h1>
+<p>def plot_trajectory(positions, title, is_3d=False):
+    if is_3d:
+        fig = plt.figure(figsize=(8,6))
+        ax = fig.add_subplot(111, projection='3d')
+        ax.plot(positions[:,0], positions[:,1], positions[:,2])
+        ax.set_xlabel('X Position')
+        ax.set_ylabel('Y Position')
+        ax.set_zlabel('Z Position')
+        ax.set_title(title)
+    else:
+        plt.figure(figsize=(8,6))
+        plt.plot(positions[:,0], positions[:,1])
+        plt.xlabel('X Position')
+        plt.ylabel('Y Position')
+        plt.title(title)
+        plt.grid(True)
+    plt.show()</p>
+<h1 id="initial-velocity-for-simulations">Initial velocity for simulations</h1>
+<p>initial_velocity = np.array([1.0, 0.0, 0.0])</p>
+<h1 id="1-uniform-magnetic-field-only-circular-motion">1) Uniform magnetic field only (circular motion)</h1>
+<p>E_field = np.array([0.0, 0.0, 0.0])
+B_field = np.array([0.0, 0.0, 1.0])
+pos, vel = simulate_motion(q, m, E_field, B_field, initial_velocity, dt, steps)
+plot_trajectory(pos, "Uniform Magnetic Field - 2D Trajectory")</p>
+<h1 id="2-combined-uniform-electric-and-magnetic-fields">2) Combined uniform electric and magnetic fields</h1>
+<p>E_field = np.array([0.0, 1.0, 0.0])
+B_field = np.array([0.0, 0.0, 1.0])
+pos, vel = simulate_motion(q, m, E_field, B_field, initial_velocity, dt, steps)
+plot_trajectory(pos, "Combined Electric and Magnetic Fields - 2D Trajectory")</p>
+<h1 id="3-crossed-electric-and-magnetic-fields">3) Crossed electric and magnetic fields</h1>
+<p>E_field = np.array([1.0, 0.0, 0.0])
+B_field = np.array([0.0, 0.0, 1.0])
+pos, vel = simulate_motion(q, m, E_field, B_field, initial_velocity, dt, steps)
+plot_trajectory(pos, "Crossed Electric and Magnetic Fields - 2D Trajectory")</p>
+<h1 id="4-helical-motion-in-uniform-magnetic-field-3d">4) Helical motion in uniform magnetic field (3D)</h1>
+<p>initial_velocity = np.array([1.0, 1.0, 0.0])
+E_field = np.array([0.0, 0.0, 0.0])
+B_field = np.array([0.0, 0.0, 1.0])
+pos, vel = simulate_motion(q, m, E_field, B_field, initial_velocity, dt, steps)
+plot_trajectory(pos, "Helical Motion in Uniform Magnetic Field - 3D Trajectory", is_3d=True)</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
