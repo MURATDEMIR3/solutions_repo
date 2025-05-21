@@ -250,48 +250,62 @@ g = \frac{4 \pi^2 L}{T^2}
 <hr/>
 <h1 id="python-code">Python Code</h1>
 <p><img alt="alt text" src="../image.png"/></p>
-<p>```python
-import numpy as np
-import pandas as pd</p>
-<h1 id="constants">Constants</h1>
-<p>pi = np.pi</p>
-<h1 id="given-parameters">Given parameters</h1>
-<p>L = 1.0  # length of pendulum in meters (can be 1 or 1.5 as per setup)
+<pre><code class="language-python">import numpy as np
+import pandas as pd
+
+# Constants
+pi = np.pi
+
+# Given parameters
+L = 1.0  # length of pendulum in meters (can be 1 or 1.5 as per setup)
 ruler_resolution = 0.001  # ruler resolution in meters (1 mm)
-delta_L = ruler_resolution / 2  # uncertainty in length</p>
-<h1 id="number-of-measurements">Number of measurements</h1>
-<p>n = 10</p>
-<h1 id="simulate-10-measurements-of-time-for-10-oscillations-seconds">Simulate 10 measurements of time for 10 oscillations (seconds)</h1>
-<h1 id="lets-simulate-realistic-values-around-the-theoretical-period-for-a-pendulum-of-length-l">Let's simulate realistic values around the theoretical period for a pendulum of length L</h1>
-<h1 id="theoretical-period-for-1-oscillation">Theoretical period for 1 oscillation:</h1>
-<p>T_theoretical = 2 * pi * np.sqrt(L / 9.81)  # seconds</p>
-<h1 id="time-for-10-oscillations">Time for 10 oscillations:</h1>
-<p>T10_theoretical = 10 * T_theoretical</p>
-<h1 id="simulate-measured-times-with-some-random-noise-to-represent-measurement-variability">Simulate measured times with some random noise to represent measurement variability</h1>
-<p>np.random.seed(42)  # for reproducibility</p>
-<h1 id="assume-standard-deviation-of-measurement-005-seconds-for-t10">Assume standard deviation of measurement ~0.05 seconds for T10</h1>
-<p>sigma_T_meas = 0.05</p>
-<p>T10_measurements = np.random.normal(loc=T10_theoretical, scale=sigma_T_meas, size=n)</p>
-<h1 id="calculate-mean-and-standard-deviation">Calculate mean and standard deviation</h1>
-<p>T10_mean = np.mean(T10_measurements)
-sigma_T = np.std(T10_measurements, ddof=1)</p>
-<h1 id="uncertainty-in-mean-time">Uncertainty in mean time</h1>
-<p>delta_T10 = sigma_T / np.sqrt(n)</p>
-<h1 id="calculate-period-and-uncertainty-for-one-oscillation">Calculate period and uncertainty for one oscillation</h1>
-<p>T = T10_mean / 10
-delta_T = delta_T10 / 10</p>
-<h1 id="calculate-g-and-its-uncertainty">Calculate g and its uncertainty</h1>
-<p>g = 4 * pi<strong>2 * L / T</strong>2
-delta_g = g * np.sqrt((delta_L / L)<strong>2 + (2 * delta_T / T)</strong>2)</p>
-<h1 id="prepare-data-for-display">Prepare data for display</h1>
-<p>data = {
+delta_L = ruler_resolution / 2  # uncertainty in length
+
+# Number of measurements
+n = 10
+
+# Simulate 10 measurements of time for 10 oscillations (seconds)
+# Let's simulate realistic values around the theoretical period for a pendulum of length L
+
+# Theoretical period for 1 oscillation:
+T_theoretical = 2 * pi * np.sqrt(L / 9.81)  # seconds
+
+# Time for 10 oscillations:
+T10_theoretical = 10 * T_theoretical
+
+# Simulate measured times with some random noise to represent measurement variability
+np.random.seed(42)  # for reproducibility
+# Assume standard deviation of measurement ~0.05 seconds for T10
+sigma_T_meas = 0.05
+
+T10_measurements = np.random.normal(loc=T10_theoretical, scale=sigma_T_meas, size=n)
+
+# Calculate mean and standard deviation
+T10_mean = np.mean(T10_measurements)
+sigma_T = np.std(T10_measurements, ddof=1)
+
+# Uncertainty in mean time
+delta_T10 = sigma_T / np.sqrt(n)
+
+# Calculate period and uncertainty for one oscillation
+T = T10_mean / 10
+delta_T = delta_T10 / 10
+
+# Calculate g and its uncertainty
+g = 4 * pi**2 * L / T**2
+delta_g = g * np.sqrt((delta_L / L)**2 + (2 * delta_T / T)**2)
+
+# Prepare data for display
+data = {
     'T10_measurements (s)': T10_measurements,
-    'L (m)': [L]<em>n,
-    'ΔL (m)': [delta_L]</em>n
-}</p>
-<p>df = pd.DataFrame(data)</p>
-<h1 id="summary-calculations">Summary calculations</h1>
-<p>summary = {
+    'L (m)': [L]*n,
+    'ΔL (m)': [delta_L]*n
+}
+
+df = pd.DataFrame(data)
+
+# Summary calculations
+summary = {
     'Mean T10 (s)': T10_mean,
     'Std Dev σ_T (s)': sigma_T,
     'Uncertainty ΔT10 (s)': delta_T10,
@@ -301,17 +315,22 @@ delta_g = g * np.sqrt((delta_L / L)<strong>2 + (2 * delta_T / T)</strong>2)</p>
     'Uncertainty Δg (m/s^2)': delta_g,
     'Standard g (m/s^2)': 9.81,
     'Difference from standard (m/s^2)': g - 9.81
-}</p>
-<h1 id="print-results">Print results</h1>
-<p>print("\n--- Pendulum Gravity Measurement Data ---\n")
-print(df.to_markdown(index=False))</p>
-<p>print("\n--- Summary ---\n")
+}
+
+# Print results
+print("\n--- Pendulum Gravity Measurement Data ---\n")
+print(df.to_markdown(index=False))
+
+print("\n--- Summary ---\n")
 for key, value in summary.items():
-    print(f"{key}: {value:.5f}")</p>
-<h1 id="markdown-formatted-summary-for-report">Markdown formatted summary for report</h1>
-<p>markdown_summary = "\n".join([f"- <strong>{key}</strong>: {value:.5f}" for key, value in summary.items()])
+    print(f"{key}: {value:.5f}")
+
+# Markdown formatted summary for report
+markdown_summary = "\n".join([f"- **{key}**: {value:.5f}" for key, value in summary.items()])
 print("\n--- Markdown summary for report ---\n")
-print(markdown_summary)</p>
+print(markdown_summary)
+
+</code></pre>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
