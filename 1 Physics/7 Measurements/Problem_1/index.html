@@ -172,6 +172,140 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="measuring-earths-gravitational-acceleration-with-a-pendulum">Measuring Earth's Gravitational Acceleration with a Pendulum</h1>
+<h2 id="motivation">Motivation:</h2>
+<p>The acceleration <strong><span class="arithmatex">\(g\)</span></strong> due to gravity is a fundamental constant that influences a wide range of physical phenomena. Measuring <strong><span class="arithmatex">\(g\)</span></strong> accurately is crucial for understanding gravitational interactions, designing structures, and conducting experiments in various fields. One classic method of determining <strong><span class="arithmatex">\(g\)</span></strong> is through the oscillations of a simple pendulum, where the period of oscillation depends on the local gravitational field.</p>
+<h2 id="task">Task:</h2>
+<p>Measure the acceleration <strong><span class="arithmatex">\(g\)</span></strong> due to gravity using a pendulum and in detail analyze the uncertainties in the measurements.</p>
+<p>This exercise emphasizes rigorous measurement practices, uncertainty analysis, and their role in experimental physics.</p>
+<h2 id="procedure">Procedure:</h2>
+<h3 id="1-materials">1. Materials:</h3>
+<ul>
+<li>A string (1 or 1.5 meters long).</li>
+<li>A small weight (e.g., bag of coins, bag of sugar, key chain) mounted on the string.</li>
+<li>Stopwatch (or smartphone timer).</li>
+<li>Ruler or measuring tape.</li>
+</ul>
+<h3 id="2-setup">2. Setup:</h3>
+<ul>
+<li>Attach the weight to the string and fix the other end to a sturdy support.</li>
+<li>Measure the length of the pendulum, <span class="arithmatex">\(L\)</span>, from the suspension point to the center of the weight using a ruler or measuring tape. Record the resolution of the measuring tool and calculate the uncertainty as half the resolution:<br/>
+<span class="arithmatex">\(<span class="arithmatex">\(\Delta L = \frac{\text{Ruler Resolution}}{2}\)</span>\)</span></li>
+</ul>
+<h3 id="3-data-collection">3. Data Collection:</h3>
+<ul>
+<li>Displace the pendulum slightly (<span class="arithmatex">\(&lt;\)</span>15°) and release it.</li>
+<li>Measure the time for 10 full oscillations (<span class="arithmatex">\(T_{10}\)</span>) and repeat this process 10 times. Record all 10 measurements.</li>
+<li>Calculate the mean time for 10 oscillations (<span class="arithmatex">\(\bar{T}_{10}\)</span>) and the standard deviation (<span class="arithmatex">\(\sigma_T\)</span>).</li>
+<li>Determine the uncertainty in the mean time as:</li>
+</ul>
+<p><span class="arithmatex">\(<span class="arithmatex">\(\Delta T_{10} = \frac{\sigma_T}{\sqrt{n}}\)</span>\)</span></p>
+<p>where <span class="arithmatex">\(n = 10\)</span>.</p>
+<h2 id="calculations">Calculations:</h2>
+<ol>
+<li>Calculate the period:</li>
+</ol>
+<div class="arithmatex">\[
+T = \frac{\bar{T}_{10}}{10} \quad \text{and} \quad \Delta T = \frac{\Delta T_{10}}{10}
+\]</div>
+<ol>
+<li>Determine <span class="arithmatex">\(g\)</span>:</li>
+</ol>
+<div class="arithmatex">\[
+g = \frac{4 \pi^2 L}{T^2}
+\]</div>
+<ol>
+<li>Propagate uncertainties:</li>
+</ol>
+<div class="arithmatex">\[
+\Delta g = g \sqrt{\left(\frac{\Delta L}{L}\right)^2 + \left(2 \frac{\Delta T}{T}\right)^2}
+\]</div>
+<h2 id="analysis">Analysis:</h2>
+<ol>
+<li>
+<p>Compare your measured <strong><span class="arithmatex">\(g\)</span></strong> with the standard value (9.81 m/s<span class="arithmatex">\(^2\)</span>).</p>
+</li>
+<li>
+<p>Discuss:</p>
+</li>
+<li>The effect of measurement resolution on <span class="arithmatex">\(\Delta L\)</span>.</li>
+<li>Variability in timing and its impact on <span class="arithmatex">\(\Delta T\)</span>.</li>
+<li>Any assumptions or experimental limitations.</li>
+</ol>
+<h2 id="deliverables">Deliverables:</h2>
+<ol>
+<li>
+<p>Tabulated data in markdown:</p>
+</li>
+<li>
+<p><span class="arithmatex">\(L\)</span>, <span class="arithmatex">\(\Delta L\)</span>, <span class="arithmatex">\(T_{10}\)</span> measurements, <span class="arithmatex">\(\bar{T}_{10}\)</span>, <span class="arithmatex">\(\sigma_T\)</span>, <span class="arithmatex">\(\Delta T\)</span>.</p>
+</li>
+<li>
+<p>Calculated <span class="arithmatex">\(g\)</span> and <span class="arithmatex">\(\Delta g\)</span>.</p>
+</li>
+<li>
+<p>Discussion on sources of uncertainty and their impact on results.</p>
+</li>
+</ol>
+<hr/>
+<h2 id="python-script">Python Script</h2>
+<p><img alt="alt text" src="../image.png"/></p>
+<p>```python
+import numpy as np
+import pandas as pd</p>
+<h1 id="constants">Constants</h1>
+<p>n = 10  # Number of trials</p>
+<h1 id="input-data">Input data</h1>
+<h1 id="length-of-pendulum-meters">Length of pendulum (meters)</h1>
+<p>L = 1.00
+ruler_resolution = 0.01  # 1 cm resolution, realistic</p>
+<h1 id="calculate-uncertainty-in-length">Calculate uncertainty in length</h1>
+<p>delta_L = ruler_resolution / 2</p>
+<h1 id="time-measurements-for-10-oscillations-seconds">Time measurements for 10 oscillations (seconds)</h1>
+<p>T10_measurements = np.array([20.15, 20.22, 20.18, 20.21, 20.19, 20.17, 20.20, 20.16, 20.23, 20.18])</p>
+<h1 id="calculate-mean-and-standard-deviation">Calculate mean and standard deviation</h1>
+<p>T10_mean = np.mean(T10_measurements)
+sigma_T = np.std(T10_measurements, ddof=1)</p>
+<h1 id="calculate-uncertainty-in-mean-time">Calculate uncertainty in mean time</h1>
+<p>delta_T10 = sigma_T / np.sqrt(n)</p>
+<h1 id="calculate-period-and-its-uncertainty">Calculate period and its uncertainty</h1>
+<p>T = T10_mean / 10
+delta_T = delta_T10 / 10</p>
+<h1 id="calculate-gravitational-acceleration-g">Calculate gravitational acceleration g</h1>
+<p>g = (4 * np.pi<strong>2 * L) / T</strong>2</p>
+<h1 id="propagate-uncertainty-for-g">Propagate uncertainty for g</h1>
+<p>delta_g = g * np.sqrt((delta_L / L)<strong>2 + (2 * delta_T / T)</strong>2)</p>
+<h1 id="prepare-tabulated-data">Prepare tabulated data</h1>
+<p>data = {
+    'Trial': np.arange(1, n + 1),
+    'T10 (s)': T10_measurements,
+}</p>
+<p>df = pd.DataFrame(data)</p>
+<h1 id="summary-data">Summary data</h1>
+<p>summary = {
+    'Pendulum Length (L)': L,
+    'Uncertainty in Length (ΔL)': delta_L,
+    'Mean Time for 10 Oscillations (T10_mean)': T10_mean,
+    'Standard Deviation (σ_T)': sigma_T,
+    'Uncertainty in Mean Time (ΔT10)': delta_T10,
+    'Period (T)': T,
+    'Uncertainty in Period (ΔT)': delta_T,
+    'Gravitational Acceleration (g)': g,
+    'Uncertainty in g (Δg)': delta_g
+}</p>
+<p>summary_df = pd.DataFrame(summary, index=[0])</p>
+<h1 id="display-dataframes">Display dataframes</h1>
+<p>print("Individual Measurements of T10:")
+print(df)
+print("\nSummary of Calculations:")
+print(summary_df)</p>
+<h1 id="optionally-export-to-markdown-file">Optionally export to markdown file</h1>
+<p>with open("pendulum_results.md", "w") as f:
+    f.write("# Pendulum Experiment Results\n\n")
+    f.write("## Individual Measurements of <span class="arithmatex">\(T_{10}\)</span> (seconds)\n")
+    f.write(df.to_markdown(index=False))
+    f.write("\n\n## Summary\n")
+    f.write(summary_df.to_markdown(index=False))</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
