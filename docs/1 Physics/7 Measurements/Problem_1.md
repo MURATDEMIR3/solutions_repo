@@ -163,3 +163,5 @@ for key, value in summary.items():
 markdown_summary = "\n".join([f"- **{key}**: {value:.5f}" for key, value in summary.items()])
 print("\n--- Markdown summary for report ---\n")
 print(markdown_summary)
+
+```
