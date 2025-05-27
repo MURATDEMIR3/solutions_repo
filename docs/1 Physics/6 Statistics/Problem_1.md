@@ -93,7 +93,7 @@ plt.show()
 3. A discussion on the implications of the results and their connection to theoretical expectations.
 
 # Hints and Resources:
-- Use Python libraries such as `NumPy` for random number generation and `Matplotlib/Seaborn` for visualization.
+- Use Python libraries such as "NumPy" for random number generation and "Matplotlib/Seaborn" for visualization.
 - Begin with simple populations (e.g., uniform or normal) before exploring more complex distributions.
 - Ensure students understand how to calculate and interpret the sample mean and variance.
 
