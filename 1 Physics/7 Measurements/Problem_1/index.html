@@ -172,6 +172,98 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
+<h1 id="measuring-earths-gravitational-acceleration-with-a-pendulum">Measuring Earth's Gravitational Acceleration with a Pendulum</h1>
+<h2 id="motivation"><strong>Motivation:</strong></h2>
+<p>The acceleration due to gravity, <span class="arithmatex">\(g\)</span>, is a fundamental constant that influences a wide range of physical phenomena. Measuring <span class="arithmatex">\(g\)</span> accurately is crucial for understanding gravitational interactions, designing structures, and conducting experiments in various fields. One classic method for determining <span class="arithmatex">\(g\)</span> is through the oscillations of a simple pendulum, where the period of oscillation depends on the local gravitational field.</p>
+<h2 id="task"><strong>Task:</strong></h2>
+<p>Measure the acceleration due to gravity using a pendulum and in detail analyze the uncertainties in the measurements.</p>
+<p>This exercise emphasizes rigorous measurement practices, uncertainty analysis, and their role in experimental physics.</p>
+<h2 id="procedure"><strong>Procedure:</strong></h2>
+<h3 id="1-materials">1. <strong>Materials:</strong></h3>
+<ul>
+<li>A string (1 or 1.5 meters long).</li>
+<li>A small weight (e.g., bag of coins, bag of sugar, key chain) mounted on the string.</li>
+<li>Stopwatch (or smartphone timer).</li>
+<li>Ruler or measuring tape.</li>
+</ul>
+<h3 id="2-setup">2. <strong>Setup:</strong></h3>
+<ul>
+<li>Attach the weight to the string and fix the other end to a sturdy support.</li>
+<li>Measure the length of the pendulum, <span class="arithmatex">\(L\)</span>, from the suspension point to the center of the weight using a ruler or measuring tape. Record the resolution of the measuring tool and calculate the uncertainty as half the resolution: 
+  $$ \Delta L = \frac{\text{Ruler Resolution}}{2} $$</li>
+</ul>
+<h3 id="3-data-collection">3. <strong>Data Collection:</strong></h3>
+<ul>
+<li>Displace the pendulum slightly (<span class="arithmatex">\(\theta \leq 15^\circ\)</span>) and release it.</li>
+<li>Measure the time for 10 full oscillations (<span class="arithmatex">\(T_{10}\)</span>) and repeat this process 10 times. Record all 10 measurements.</li>
+<li>Calculate the mean time for 10 oscillations (<span class="arithmatex">\(\overline{T_{10}}\)</span>) and the standard deviation (<span class="arithmatex">\(\sigma_T\)</span>).</li>
+<li>Determine the uncertainty in the mean time as:
+  $$ \Delta T_{10} = \frac{\sigma_T}{\sqrt{n}} $$
+  where <span class="arithmatex">\(n = 10\)</span>.</li>
+</ul>
+<h2 id="calculations"><strong>Calculations:</strong></h2>
+<h3 id="1-calculate-the-period">1. <strong>Calculate the Period:</strong></h3>
+<p>The period <span class="arithmatex">\(T\)</span> is given by the formula:
+$$ T = \frac{T_{10}}{10} \quad \text{and} \quad \Delta T = \frac{\Delta T_{10}}{10} $$</p>
+<h3 id="2-determine-g">2. <strong>Determine <span class="arithmatex">\(g\)</span>:</strong></h3>
+<p>Using the formula for the acceleration due to gravity:
+$$ g = \frac{4\pi^2L}{T^2} $$</p>
+<h3 id="3-propagate-uncertainties">3. <strong>Propagate Uncertainties:</strong></h3>
+<p>The uncertainty in <span class="arithmatex">\(g\)</span> is given by:
+$$ \Delta g = g \left( \frac{\Delta L}{L} \right)^2 + \left( \frac{2 \Delta T}{T} \right)^2 $$</p>
+<h2 id="analysis"><strong>Analysis:</strong></h2>
+<h3 id="1-compare-your-measured-g-with-the-standard-value-981-textms2">1. <strong>Compare your measured <span class="arithmatex">\(g\)</span></strong> with the standard value <span class="arithmatex">\(9.81 \, \text{m/s}^2\)</span>.</h3>
+<h3 id="2-discuss">2. <strong>Discuss:</strong></h3>
+<ul>
+<li>The effect of measurement resolution on <span class="arithmatex">\(\Delta L\)</span>.</li>
+<li>Variability in timing and its impact on <span class="arithmatex">\(\Delta T\)</span>.</li>
+<li>Any assumptions or experimental limitations.</li>
+</ul>
+<h2 id="python-code-version-of-the-simulation"><strong>Python Code Version of the Simulation</strong></h2>
+<p><img alt="alt text" src="../image.png"/></p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Define constants
+L = 1.5  # length of the pendulum in meters
+n = 10  # number of oscillations
+g_standard = 9.81  # standard value for g in m/s^2
+
+# Sample data for T_10 (in seconds)
+T_10 = np.array([19.8, 19.9, 20.1, 19.7, 19.9, 20.0, 19.8, 19.9, 19.7, 19.8])
+
+# Calculate the mean and standard deviation of T_10
+mean_T10 = np.mean(T_10)
+std_T10 = np.std(T_10)
+
+# Calculate the period T
+T = mean_T10 / n
+delta_T = std_T10 / np.sqrt(n)
+
+# Calculate g
+g = (4 * np.pi**2 * L) / T**2
+
+# Propagate uncertainties
+delta_L = 0.01  # Assuming ruler resolution uncertainty (1 cm)
+delta_g = g * (delta_L / L)**2 + (2 * delta_T / T)**2
+
+# Output results
+print(f"Calculated g: {g:.4f} m/s^2")
+print(f"Uncertainty in g: {delta_g:.4f} m/s^2")
+
+# Plotting the data for T_10
+plt.hist(T_10, bins=5, edgecolor='black')
+plt.title('Distribution of T_10 Measurements')
+plt.xlabel('Time for 10 Oscillations (s)')
+plt.ylabel('Frequency')
+plt.show()
+
+</code></pre>
+<h2 id="deliverables"><strong>Deliverables:</strong></h2>
+<p>The following should be provided in markdown format:
+- <span class="arithmatex">\(L\)</span>, <span class="arithmatex">\(\Delta L\)</span>, <span class="arithmatex">\(T_{10}\)</span> measurements, <span class="arithmatex">\(\overline{T_{10}}\)</span>, <span class="arithmatex">\(\sigma_T\)</span>, <span class="arithmatex">\(\Delta T\)</span>.
+- Calculated <span class="arithmatex">\(g\)</span> and <span class="arithmatex">\(\Delta g\)</span>.
+- The discussion on sources of uncertainty and their impact on the results.</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
